@@ -1,18 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-<header class="masthead bg-index text-white text-center py-4">
-    <div class="container d-flex align-items-center flex-column pt-2">
-        <h2>Movies Store</h2>
-        <p>Your Ticket to Unlimited Entertainment!</p>
-    </div>
-</header>
-<div class="p-3">
+{% load static %}
+<div class="p-3 d-flex align-items-center home-page">
     <div class="container">
-        <div class="row mt-3">
-            <div class="col mx-auto text-center mb-3">
-                <h4>Welcome to the best movie store!!</h4>
+        <div class="row">
+            <div class="col mx-auto text-center">
+                <h4 class="text-uppercase text-white">Step into StealthCut, where every frame hits with the precision of a blade</h4>
+                <a href="{% url 'movies.index' %}" class="btn btn-primary mt-4 px-5 py-3 rounded-pill fw-semibold text-uppercase" style="background-color: #aa2619; border-color: #aa2619; color: white; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(170, 38, 25, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">Explore</a>
             </div>
         </div>
     </div>
+</div>
+<div style="position: absolute; bottom: 0; left: 0; text-align: center;">
+    <img src="{% static 'img/ninja.png' %}" alt="Ninja" class="img-fluid" style="height: 350px; opacity: 1;">
 </div>
 {% endblock content %}
