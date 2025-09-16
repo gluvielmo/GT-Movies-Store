@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-3">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col mx-auto mb-3">
+        <h2>{{ template_data.title }}</h2>
+        <hr />
+        <p class="text-light">Read what our customers have to say about their checkout experience at GT Movie Store.</p>
+        
+        {% if template_data.feedback_list %}
+          <div class="row">
+            {% for feedback in template_data.feedback_list %}
+              <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      {% if feedback.name %}
+                        {{ feedback.name }}
+                      {% else %}
+                        Anonymous
+                      {% endif %}
+                    </h5>
+                    <p class="card-text">{{ feedback.thoughts }}</p>
+                    <small class="text-light opacity-75">
+                      {{ feedback.created_at|date:"F d, Y \a\t g:i A" }}
+                      {% if feedback.order %}
+                        • Order #{{ feedback.order.id }}
+                      {% endif %}
+                    </small>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="text-center py-5">
+            <h4 class="text-light">No feedback yet</h4>
+            <p class="text-light">Be the first to share your thoughts about our checkout process!</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
