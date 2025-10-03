@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="display-4 text-white">Movie Petitions</h1>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'petitions.create' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus me-2"></i>Create Petition
+                    </a>
+                {% endif %}
+            </div>
+            
+            {% if user.is_authenticated %}
+                <div class="mb-3">
+                    <a href="{% url 'petitions.my_petitions' %}" class="btn btn-outline-light">
+                        <i class="fas fa-user me-2"></i>My Petitions
+                    </a>
+                </div>
+            {% endif %}
+
+            {% if petitions %}
+                <div class="row">
+                    {% for petition in petitions %}
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card h-100 bg-dark text-white border-secondary">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title text-primary">{{ petition.title }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">
+                                        <i class="fas fa-film me-1"></i>{{ petition.movie_title }}
+                                    </h6>
+                                    <p class="card-text flex-grow-1">
+                                        {{ petition.description|truncatewords:20 }}
+                                    </p>
+                                    <div class="mt-auto">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <small class="text-muted">
+                                                <i class="fas fa-user me-1"></i>{{ petition.created_by.username }}
+                                            </small>
+                                            <small class="text-muted">
+                                                <i class="fas fa-calendar me-1"></i>{{ petition.created_at|date:"M d, Y" }}
+                                            </small>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-success fs-6">
+                                                <i class="fas fa-thumbs-up me-1"></i>{{ petition.vote_count }} votes
+                                            </span>
+                                            <a href="{% url 'petitions.detail' petition.id %}" class="btn btn-outline-primary btn-sm">
+                                                View Details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-clipboard-list fa-5x text-muted mb-3"></i>
+                    <h3 class="text-white">No Petitions Yet</h3>
+                    <p class="text-muted">Be the first to create a petition for a movie you'd like to see in our catalog!</p>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'petitions.create' %}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-plus me-2"></i>Create First Petition
+                        </a>
+                    {% else %}
+                        <a href="{% url 'accounts.login' %}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i>Login to Create Petition
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
